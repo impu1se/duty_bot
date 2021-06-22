@@ -16,8 +16,8 @@
      environment:
        - POSTGRES_HOST_AUTH_METHOD=trust
 
-   gif_bot:
-     container_name: gif_bot
+   duty_bot:
+     container_name: duty
      build:
        context: .
        dockerfile: Dockerfile

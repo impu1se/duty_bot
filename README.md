@@ -1,7 +1,3 @@
-# gif_bot
-
-# Create gif from movie
-
 ## RUN 
 Add in .env:  
 GIF_BOT_DEBUG=true | false   
