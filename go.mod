@@ -1,4 +1,4 @@
-module github.com/impu1se/movie_to_gif_bot
+module github.com/impu1se/duty_bot
 
 go 1.13
 

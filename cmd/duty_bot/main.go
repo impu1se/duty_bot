@@ -6,10 +6,10 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/impu1se/movie_to_gif_bot/configs"
-	"github.com/impu1se/movie_to_gif_bot/internal/botapi"
-	"github.com/impu1se/movie_to_gif_bot/internal/gif_bot"
-	"github.com/impu1se/movie_to_gif_bot/internal/storage"
+	"github.com/impu1se/duty_bot/configs"
+	"github.com/impu1se/duty_bot/internal/botapi"
+	"github.com/impu1se/duty_bot/internal/duty"
+	"github.com/impu1se/duty_bot/internal/storage"
 	"go.uber.org/zap"
 )
 
@@ -28,14 +28,9 @@ func main() {
 		go http.ListenAndServe(":"+config.Port, nil)
 	}
 
-	db, err := storage.NewDb(config)
-	if err != nil {
-		log.Fatalf("can't create db, reason: %v", err)
-	}
-
 	logger := zap.NewExample()
 	system := storage.NewLoader(logger)
-	gifBot := gif_bot.NewGifBot(config, botApi.ListenForWebhook("/"+botApi.Token), system, db, logger, *botApi, context.Background())
+	gifBot := duty.NewDutyBot(config, botApi.ListenForWebhook("/"+botApi.Token), system, logger, *botApi, context.Background())
 
 	fmt.Printf("Start server on %v:%v ", config.Address, config.Port)
 	gifBot.Run()

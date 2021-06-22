@@ -5,7 +5,7 @@ import (
 	"log"
 
 	tgbotapi "github.com/Syfaro/telegram-bot-api"
-	"github.com/impu1se/movie_to_gif_bot/configs"
+	"github.com/impu1se/duty_bot/configs"
 )
 
 func NewBotApi(config *configs.Config) (*tgbotapi.BotAPI, error) {
