@@ -6,7 +6,7 @@ import (
 	"github.com/kelseyhightower/envconfig"
 )
 
-const appName = "duty"
+const appName = "duty_bot"
 
 type Config struct {
 	ApiToken                string `required:"true"`
@@ -16,8 +16,9 @@ type Config struct {
 	Tls                     bool   `default:"false"`
 	CertFile                string `required:"true"`
 	KeyFile                 string `required:"true"`
-	UpdateTimeInMinutes     int    `default:"1"`
-	BaseTimeForNotification int    `default:"7"`
+	IntervalTime            int    `default:"1"`
+	BaseTimeForNotification int    `default:"11"`
+	ChatIDForNotification   int64
 }
 
 func NewConfig() *Config {

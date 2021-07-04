@@ -23,12 +23,13 @@ func NewLoader(logger *zap.Logger) *System {
 	return &System{logger: logger}
 }
 
-func (l *System) ReadDutyCSV(file string) ([][]string, error) {
+func (l *System) ReadDutyCSV(file string) (map[string][][]string, error) {
+	dutyList := make(map[string][][]string)
 	csvFile, err := os.Open(file)
 
 	if err != nil {
 		l.logger.Error(err.Error())
-		return [][]string{}, err
+		return dutyList, err
 	}
 	defer csvFile.Close()
 	l.logger.Info("Successfully Opened CSV file")
@@ -36,12 +37,16 @@ func (l *System) ReadDutyCSV(file string) ([][]string, error) {
 	csvLines, err := csv.NewReader(csvFile).ReadAll()
 	if err != nil {
 		l.logger.Error(err.Error())
-		return [][]string{}, err
+		return dutyList, err
 	}
 
-	dutyList := make([][]string, len(csvLines), len(csvLines))
-	for i, line := range csvLines[1:] {
-		dutyList[i] = append(dutyList[i], line[0], line[1])
+	for _, nameCommand := range csvLines[0][1:] {
+		dutyList[nameCommand] = make([][]string, len(csvLines), len(csvLines))
+	}
+	for j, line := range csvLines[1:] {
+		for i, nameCommand := range csvLines[0][1:] {
+			dutyList[nameCommand][j] = append(dutyList[nameCommand][j], line[0], line[i+1])
+		}
 	}
 
 	return dutyList, nil
